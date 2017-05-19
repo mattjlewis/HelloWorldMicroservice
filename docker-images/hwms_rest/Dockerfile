@@ -1,6 +1,6 @@
 FROM hwms
 
-EXPOSE 8080
+EXPOSE 8010
 
 USER hwms
 

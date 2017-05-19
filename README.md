@@ -17,7 +17,7 @@ ansible-playbook site.yaml
 
 Docker Machine creates a light-weight virtual machine based on [boot2docker](http://boot2docker.io/) for hosting containers and installs the docker client. If on Windows or Mac install [docker-toolbox](https://www.docker.com/products/docker-toolbox) (I only selected Docker Client and Machine).
 ```
-docker-machine create
+docker-machine create --virtualbox-memory "4096"
 ```
 
 ## Docker Stuff
@@ -36,13 +36,15 @@ docker network create --driver bridge hwms_nw
 
 Start the machines:
 ```
-docker run --detach --network=hwms_nw --publish 8080:8080 --hostname hwmsrest1 --name hwmsrest1 hwms_rest
-docker run --detach --network=hwms_nw --publish 4567:4567 --hostname hwmsweb1 --name hwmsweb1 hwms_web
+docker run --detach --network=hwms_nw --publish 8010:8010 --hostname hwmsrest1 --name hwmsrest1 hwms_rest
+docker run --detach --network=hwms_nw --publish 8020:8020 --hostname hwmsweb1 --name hwmsweb1 hwms_web
+docker run --detach --network=hwms_nw --publish 8080:80 -v /home/docker/nginx.conf.d:/etc/nginx/conf.d:ro --hostname hwmslb1 --name hwmslb1 nginx
 ```
 
 Test:
 ```
+curl http://localhost:8010/service/users
 curl http://localhost:8080/service/users
 ```
 
-Access the [Browser UI](http://localhost:4567/).
+Access the Browser UI [direct](http://localhost:8020/), [via NGINX](http://localhost:8080/).

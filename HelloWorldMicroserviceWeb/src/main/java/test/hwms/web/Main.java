@@ -16,12 +16,12 @@ public class Main {
 	
 	private static final String PROP_PREFIX = "HWMS";
 	
-	private static final int WEB_DEFAULT_PORT = 4567;
-	private static final String WEB_PORT_PROP = PROP_PREFIX + "_WEB_PORT";
-	
-	public static final int REST_DEFAULT_PORT = 8080;
+	public static final int REST_DEFAULT_PORT = 8010;
 	public static final String REST_HOSTNAME_PROP = PROP_PREFIX + "_REST_HOSTNAME";
 	public static final String REST_PORT_PROP = PROP_PREFIX + "_REST_PORT";
+	
+	private static final int WEB_DEFAULT_PORT = 8020;
+	private static final String WEB_PORT_PROP = PROP_PREFIX + "_WEB_PORT";
 	
 	public static void main(String[] args) {
 		staticFileLocation("/public");
