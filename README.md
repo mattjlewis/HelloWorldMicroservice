@@ -1,12 +1,11 @@
 # HelloWorldMicroservice - An Example Microservice Based Application
 
 ## Preparation
-Two mechanisms, both require VirtualBox to be installed.
+There are two choices for setting up a docker host on Windows 7 and 8; both require [VirtualBox](https://www.virtualbox.org/wiki/Downloads) to be installed. Docker Machine is by far the simplest solution.
 
-### 1. vagrant
+### 1. Create your own Linux virtual server
 
-Install [Vagrant](http://vagrantup.com/).
-Change directory to HelloWorldMicroservice
+Easiest way is via [Vagrant](https://www.vagrantup.com/downloads.html). Change directory to HelloWorldMicroservice then start and configure the OEL 7 virtual machine:
 ```
 vagrant up
 vagrant ssh
@@ -14,9 +13,9 @@ cd HelloWorldMicroservice/playbook
 ansible-playbook site.yaml
 ```
 
-### 2. docker-machine
+### 2. Docker Machine
 
-If on Windows or Mac install [docker-toolbox](https://www.docker.com/products/docker-toolbox) (I only installed Docker Client and Machine).
+Docker Machine creates a light-weight virtual machine based on [boot2docker](http://boot2docker.io/) for hosting containers and installs the docker client. If on Windows or Mac install [docker-toolbox](https://www.docker.com/products/docker-toolbox) (I only selected Docker Client and Machine).
 ```
 docker-machine create
 ```
