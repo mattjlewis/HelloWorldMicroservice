@@ -1,0 +1,30 @@
+- name: Enable UEKR4
+  yum_repository:
+    file: public-yum-ol7
+    name: ol7_UEKR4
+    description: Latest Unbreakable Enterprise Kernel Release 4 for Oracle Linux $releasever ($basearch)
+    baseurl: http://yum.oracle.com/repo/OracleLinux/OL7/UEKR4/$basearch/
+    gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+    gpgcheck: True
+    enabled: True
+
+- name: Enable addons
+  yum_repository:
+    file: public-yum-ol7
+    name: ol7_addons
+    description: Oracle Linux $releasever Add ons ($basearch)
+    baseurl: http://yum.oracle.com/repo/OracleLinux/OL7/addons/$basearch/
+    gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+    gpgcheck: True
+    enabled: True
+
+- name: Install Docker
+  package:
+    name: docker-engine
+    state: present
+
+- name: Add vagrant user to docker group
+  user:
+    name: vagrant
+    groups: docker
+    append: True
