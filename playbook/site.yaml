@@ -1,0 +1,5 @@
+- name: Pre-reqs
+  hosts: all
+  become: yes
+  roles:
+    - prepare

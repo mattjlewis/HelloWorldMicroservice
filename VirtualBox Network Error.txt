@@ -1,0 +1,14 @@
+If you get the dreaded VERR_INTNET_FLT_IF_NOT_FOUND error:
+
+Open Network and Sharing Center and go to the Change adapter settings in the sidebar.
+Right-click on the host-only adapter in the list of adapters and then:
+Configure button ->
+Driver tab ->
+Update driver button.
+Select Browse my computer ...
+In the next dialog select Let me pick ....
+You should see the list with just host-only driver in it.
+Select it and click next.
+After the driver is updated, please try using host-only network in a VM again.
+
+Also try going to properties and disabling then enabling VirtualBox NDIS6 Bridged Networking Driver
