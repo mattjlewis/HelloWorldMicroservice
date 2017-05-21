@@ -2,7 +2,10 @@ FROM isuper/java-oracle:jdk_latest
 
 COPY pom.xml /app/pom.xml
 
-# Install some basic network tools
+# Install wget (for Maven install)
+RUN apt-get update && apt-get install -y wget
+
+# Install some basic network tools to assist with debugging only
 RUN apt-get update && apt-get install -y net-tools iproute iputils-ping dnsutils
 
 RUN groupadd -r hwms && useradd -r -m -g hwms hwms
