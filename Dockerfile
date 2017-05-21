@@ -29,4 +29,4 @@ USER hwms
 RUN wget http://mirror.vorboss.net/apache/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz && tar zxf apache-maven-3.5.0-bin.tar.gz
 
 # Compile and package all projects
-RUN MVN_HOME=/app/apache-maven-3.5.0 mvn package
+RUN MVN_HOME=/app/apache-maven-3.5.0 /app/apache-maven-3.5.0/mvn package
