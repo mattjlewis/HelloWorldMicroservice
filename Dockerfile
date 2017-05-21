@@ -5,9 +5,6 @@ COPY pom.xml /app/pom.xml
 # Install some basic network tools
 RUN apt-get update && apt-get install -y net-tools iproute iputils-ping dnsutils
 
-# Install maven
-RUN apt-get update && apt-get install -y --no-install-recommends maven
-
 RUN groupadd -r hwms && useradd -r -m -g hwms hwms
 
 WORKDIR /app
@@ -25,5 +22,8 @@ RUN chown -R hwms. /app
 
 USER hwms
 
+# Install maven
+RUN wget http://mirror.vorboss.net/apache/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz && tar zxf apache-maven-3.5.0-bin.tar.gz
+
 # Compile and package all projects
-RUN mvn package
+RUN MVN_HOME=/app/apache-maven-3.5.0 mvn package
