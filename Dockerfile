@@ -25,8 +25,10 @@ RUN chown -R hwms. /app
 
 USER hwms
 
+ENV MAVEN_VERSION=3.5.0
+
 # Install maven
-RUN wget http://mirror.vorboss.net/apache/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz && tar zxf apache-maven-3.5.0-bin.tar.gz
+RUN wget http://mirror.vorboss.net/apache/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz && tar zxf apache-maven-${MAVEN_VERSION}-bin.tar.gz
 
 # Compile and package all projects
-RUN MVN_HOME=/app/apache-maven-3.5.0 ${MVN_HOME}/bin/mvn package -DskipTests
+RUN MVN_HOME=/app/apache-maven-${MAVEN_VERSION} /app/apache-maven-${MAVEN_VERSION}/bin/mvn package -DskipTests
