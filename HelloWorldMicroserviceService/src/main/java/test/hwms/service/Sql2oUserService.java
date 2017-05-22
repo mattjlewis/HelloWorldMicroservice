@@ -11,52 +11,79 @@ import test.hwms.model.User;
 import test.hwms.model.UserNotFoundException;
 
 public class Sql2oUserService implements IUserService {
+	public static final String DEFAULT_DB_HOSTNAME = "hwmsdb";
+	public static final int DEFAULT_DB_PORT = 3306;
+	public static final String DEFAULT_DB_USERNAME = "hwms_owner";
+	public static final String DEFAULT_DB_PASSWORD = "helloworld";
+	
 	private Sql2o sql2o;
 	
 	public Sql2oUserService() {
-		String db_hostname = "hwmsdb";
-		int db_port = 3306;
-		String db_username = "hwms_owner";
-		String db_password = "helloworld";
-		this.sql2o = new Sql2o("jdbc://" + db_hostname + ":" + db_port + "/hwms", db_username, db_password);
+		this(DEFAULT_DB_HOSTNAME, DEFAULT_DB_PORT, DEFAULT_DB_USERNAME, DEFAULT_DB_PASSWORD);
+	}
+	
+	public Sql2oUserService(String hostname, int port, String username, String password) {
+		this.sql2o = new Sql2o("jdbc:mysql://" + hostname + ":" + port + "/hwms", username, password);
 	}
 
 	@Override
 	public Collection<User> getAllUsers() {
 		List<User> users;
 		try (Connection conn = sql2o.open()) {
-			users = conn.createQuery("SELECT user_id, name, email FROM USERS").executeAndFetch(User.class);
+			users = conn.createQuery("SELECT id, name, email FROM users").executeAndFetch(User.class);
 		}
 		return users;
 	}
 
 	@Override
 	public User getUser(int id) throws UserNotFoundException {
-		User user;
 		try (Connection conn = sql2o.open()) {
-			user = conn.createQuery("SELECT user_id, name, email FROM USERS WHERE user_id=:user_id")
-					.addParameter("user_id", id)
-					.executeAndFetchFirst(User.class);
+			return getUser(conn, id);
 		}
-		return user;
+	}
+	
+	private static User getUser(Connection conn, int id) {
+		return conn.createQuery("SELECT id, name, email FROM users WHERE id=:id")
+				.addParameter("id", id)
+				.executeAndFetchFirst(User.class);
 	}
 
 	@Override
 	public User createUser(String name, String email) {
-		// TODO Auto-generated method stub
-		return null;
+		try (Connection conn = sql2o.open()) {
+			Integer id = conn.createQuery("INSERT INTO users(name, email) values(:name, :email)", true)
+					.addParameter("name", name)
+					.addParameter("email", email)
+					.executeUpdate()
+					.getKey(Integer.class);
+			return getUser(conn, id.intValue());
+		}
 	}
 
 	@Override
 	public User updateUser(int id, String name, String email) throws UserNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		try (Connection conn = sql2o.open()) {
+			int result = conn.createQuery("UPDATE users SET name=:name, email=:email WHERE id=:id")
+					.addParameter("id", id)
+					.addParameter("name", name)
+					.addParameter("email", email)
+					.executeUpdate()
+					.getResult();
+			System.out.println("updateUser result: " + result);
+			return getUser(conn, id);
+		}
 	}
 
 	@Override
 	public User deleteUser(int id) throws UserNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		try (Connection conn = sql2o.open()) {
+			User user = getUser(conn, id);
+			int result = conn.createQuery("DELETE FROM users WHERE id=:id")
+				.addParameter("id", id)
+				.executeUpdate()
+				.getResult();
+			System.out.println("deleteUser result: " + result);
+			return user;
+		}
 	}
-
 }

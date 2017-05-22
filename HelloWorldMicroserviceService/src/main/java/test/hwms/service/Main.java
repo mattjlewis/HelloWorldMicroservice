@@ -11,6 +11,6 @@ public class Main {
 	public static void main(String[] args) {
 		port(PropertyUtil.getIntProperty(REST_PORT_PROP, REST_DEFAULT_PORT));
 		
-		UserServiceController.init(new StaticUserService());
+		UserServiceController.init(new Sql2oUserService());
 	}
 }
