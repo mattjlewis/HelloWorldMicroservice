@@ -9,18 +9,19 @@ Make sure you have [VirtualBox](https://www.virtualbox.org/wiki/Downloads) insta
 Docker Machine creates a light-weight Virtual Machine based on [boot2docker](http://boot2docker.io/) for hosting containers.
 If on Windows or Mac install [docker-toolbox](https://www.docker.com/products/docker-toolbox) (I selected Docker Client and Docker Machine).
 
-Create a new docker machine:
+Create a new docker host machine and log in to it:
 ```
 docker-machine create --virtualbox-memory "4096"
+docker-machine ssh
 ```
-
-## Docker Stuff
 
 Download the projects:
 ```
 git clone https://github.com/mattjlewis/HelloWorldMicroservice
 cd HelloWorldMicroservice
 ```
+
+## Docker Stuff
 
 Create the user-defined bridge network (so we get embedded DNS):
 ```
