@@ -9,15 +9,15 @@ import test.hwms.model.User;
 import test.hwms.model.UserNotFoundException;
 
 public class StaticUserService implements IUserService {
-	private static Map<String, User> users;
+	private static Map<Integer, User> users;
 	private static int lastId;
 	
 	static {
 		users = new HashMap<>();
-		String id = Integer.toString(lastId++);
-		users.put(id, new User(id, "fred", "fred@gmail.com"));
-		id = Integer.toString(lastId++);
-		users.put(id, new User(id, "bob", "bob@hotmail.com"));
+		int id = lastId++;
+		users.put(Integer.valueOf(id), new User(id, "fred", "fred@gmail.com"));
+		id = lastId++;
+		users.put(Integer.valueOf(id), new User(id, "bob", "bob@hotmail.com"));
 	}
 
 	@Override
@@ -26,9 +26,9 @@ public class StaticUserService implements IUserService {
 	}
 
 	@Override
-	public User getUser(String id) throws UserNotFoundException {
+	public User getUser(int id) throws UserNotFoundException {
 		synchronized (users) {
-			User user = users.get(id);
+			User user = users.get(Integer.valueOf(id));
 			if (user == null) {
 				throw new UserNotFoundException(id);
 			}
@@ -39,17 +39,16 @@ public class StaticUserService implements IUserService {
 	@Override
 	public User createUser(String name, String email) {
 		synchronized (users) {
-			String id = Integer.toString(lastId++);
-			User user = new User(id, name, email);
-			users.put(id, user);
+			User user = new User(lastId++, name, email);
+			users.put(Integer.valueOf(user.getId()), user);
 			return user;
 		}
 	}
 
 	@Override
-	public User updateUser(String id, String name, String email) throws UserNotFoundException {
+	public User updateUser(int id, String name, String email) throws UserNotFoundException {
 		synchronized (users) {
-			User user = users.get(id);
+			User user = users.get(Integer.valueOf(id));
 			if (user == null) {
 				throw new UserNotFoundException(id);
 			}
@@ -60,9 +59,9 @@ public class StaticUserService implements IUserService {
 	}
 	
 	@Override
-	public User deleteUser(String id) throws UserNotFoundException {
+	public User deleteUser(int id) throws UserNotFoundException {
 		synchronized (users) {
-			User user = users.remove(id);
+			User user = users.remove(Integer.valueOf(id));
 			if (user == null) {
 				throw new UserNotFoundException(id);
 			}

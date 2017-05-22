@@ -50,7 +50,7 @@ public class RESTClientUserService implements IUserService {
 	}
 
 	@Override
-	public User getUser(String id) throws UserNotFoundException {
+	public User getUser(int id) throws UserNotFoundException {
 		HttpGet get = new HttpGet("/service/user/" + id);
 		try (CloseableHttpClient client = HttpClients.createDefault();
 				CloseableHttpResponse response = client.execute(httpHost, get)) {
@@ -89,7 +89,7 @@ public class RESTClientUserService implements IUserService {
 	}
 
 	@Override
-	public User updateUser(String id, String name, String email) throws UserNotFoundException {
+	public User updateUser(int id, String name, String email) throws UserNotFoundException {
 		HttpPut put = new HttpPut("/service/user");
 		StringEntity input;
 		try {
@@ -112,7 +112,7 @@ public class RESTClientUserService implements IUserService {
 	}
 
 	@Override
-	public User deleteUser(String id) throws UserNotFoundException {
+	public User deleteUser(int id) throws UserNotFoundException {
 		HttpDelete delete = new HttpDelete("/service/user/" + id);
 		try (CloseableHttpClient client = HttpClients.createDefault();
 				CloseableHttpResponse response = client.execute(httpHost, delete)) {

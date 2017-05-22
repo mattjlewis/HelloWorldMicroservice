@@ -16,7 +16,7 @@ public class UserServiceController {
 		// List
 		get("/service/users", (req, res) -> userService.getAllUsers(), GSON::toJson);
 		// Get
-		get("/service/user/:id", (req, res) -> userService.getUser(req.params("id")), GSON::toJson);
+		get("/service/user/:id", (req, res) -> userService.getUser(Integer.parseInt(req.params("id"))), GSON::toJson);
 		// Create
 		post("/service/user", (req, res) -> {
 			User user = GSON.fromJson(req.body(), User.class);
@@ -28,7 +28,7 @@ public class UserServiceController {
 			return userService.updateUser(user.getId(), user.getName(), user.getEmail());
 		}, GSON::toJson);
 		// Delete
-		delete("/service/user/:id", (req, res) -> userService.deleteUser(req.params("id")), GSON::toJson);
+		delete("/service/user/:id", (req, res) -> userService.deleteUser(Integer.parseInt(req.params("id"))), GSON::toJson);
 		
 		after("/service/*", (req, res) -> res.type(JSON_CONTENT_TYPE));
 		

@@ -22,7 +22,7 @@ public class UserController {
 		get("/user/:id", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
 			model.put("page", "users");
-			model.put("user", userService.getUser(req.params("id")));
+			model.put("user", userService.getUser(Integer.parseInt(req.params("id"))));
 			return Main.TEMPLATE_ENGINE.render(new ModelAndView(model, "user.ftl"));	
 		});
 		// Create
@@ -37,7 +37,7 @@ public class UserController {
 		post("/user/:id", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
 			model.put("page", "users");
-			model.put("user", userService.updateUser(req.params("id"), req.queryParams("name"), req.queryParams("email")));
+			model.put("user", userService.updateUser(Integer.parseInt(req.params("id")), req.queryParams("name"), req.queryParams("email")));
 			model.put("users", userService.getAllUsers());
 			return Main.TEMPLATE_ENGINE.render(new ModelAndView(model, "users.ftl"));	
 		});

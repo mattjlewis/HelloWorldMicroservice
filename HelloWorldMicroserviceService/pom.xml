@@ -12,6 +12,11 @@
 	<artifactId>HelloWorldMicroserviceService</artifactId>
 	<packaging>jar</packaging>
 	
+	<properties>
+		<sql2o.version>1.5.4</sql2o.version>
+		<mysql-connector-java.version>6.0.6</mysql-connector-java.version>
+	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -37,6 +42,16 @@
 			<groupId>com.HelloWorldMicroservice</groupId>
 			<artifactId>HelloWorldMicroserviceCommon</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.sql2o</groupId>
+			<artifactId>sql2o</artifactId>
+			<version>${sql2o.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-connector-java.version}</version>
 		</dependency>
 	</dependencies>
 
