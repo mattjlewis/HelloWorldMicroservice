@@ -22,17 +22,17 @@ git clone https://github.com/mattjlewis/HelloWorldMicroservice
 cd HelloWorldMicroservice
 ```
 
+Create the user-defined bridge network (so we get embedded DNS):
+```
+docker network create --driver bridge hwms_nw
+```
+
 Build the machines:
 ```
 docker build -t hwms_db docker-images/hwms_db
 docker build -t hwms .
 docker build -t hwms_rest docker-images/hwms_rest
 docker build -t hwms_web docker-images/hwms_web
-```
-
-Create the user-defined bridge network (so we get embedded DNS):
-```
-docker network create --driver bridge hwms_nw
 ```
 
 Start the database:
