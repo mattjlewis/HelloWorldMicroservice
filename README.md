@@ -64,3 +64,9 @@ curl http://localhost:8080/service/users
 ```
 
 Access the [Browser UI](http://localhost:8080/) via NGINX.
+
+## TODO
+
+1. Deploy to docker swarm and use ```docker service scale```
+1. Use docker-compose
+1. Use ```store/oracle/serverjre:8``` rather than the unsupported ```isuper/java-oracle```
