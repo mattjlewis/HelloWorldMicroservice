@@ -16,6 +16,17 @@ public class PropertyUtil {
 		return result;
 	}
 	
+	public static boolean getBooleanProperty(String key, boolean defaultValue) {
+		boolean result = defaultValue;
+		
+		String val = getProperty(key, null);
+		if (val != null) {
+			result = Boolean.parseBoolean(val);
+		}
+		
+		return result;
+	}
+	
 	public static String getProperty(String key, String defaultValue) {
 		// Check -D<key> command line properties
 		String val = System.getProperty(key);
