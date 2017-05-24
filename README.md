@@ -1,6 +1,6 @@
 # HelloWorldMicroservice - An Example Microservice Based Application
 
-## Step 1: Prepare the Host Machine
+## Prepare the Host Machine
 
 As docker-engine is only supported on Windows 10 and I am running Windows 7 I need a Linux Virtual Machine to act as my docker engine.
 I could create my own Linux Virtual Machine and install docker-engine on that, however, docker-machine makes this much easier.
