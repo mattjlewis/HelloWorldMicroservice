@@ -3,12 +3,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<parent>
-		<groupId>com.HelloWorldMicroservice</groupId>
-		<artifactId>HelloWorldMicroservice</artifactId>
+		<groupId>test.hwms</groupId>
+		<artifactId>hwms-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	
+	<artifactId>hwms-common</artifactId>
 	<name>HelloWorldMicroservice - Common</name>
-	<artifactId>HelloWorldMicroserviceCommon</artifactId>
+	<description>Hello World Microservice - Common</description>
 	<packaging>jar</packaging>
 </project>

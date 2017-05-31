@@ -1,20 +1,25 @@
 package test.hwms.service;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
-import test.hwms.model.IUserService;
-import test.hwms.model.User;
-import test.hwms.model.UserNotFoundException;
+import test.hwms.domain.IUserService;
+import test.hwms.domain.User;
+import test.hwms.domain.UserNotFoundException;
 
 public class Sql2oUserService implements IUserService {
 	public static final String DEFAULT_DB_HOSTNAME = "hwmsdb";
 	public static final int DEFAULT_DB_PORT = 3306;
 	public static final String DEFAULT_DB_USERNAME = "hwms_owner";
 	public static final String DEFAULT_DB_PASSWORD = "helloworld";
+	
+	private static User getUser(Connection conn, int id) {
+		return conn.createQuery("SELECT id, name, email FROM users WHERE id=:id")
+				.addParameter("id", id)
+				.executeAndFetchFirst(User.class);
+	}
 	
 	private Sql2o sql2o;
 	
@@ -28,11 +33,9 @@ public class Sql2oUserService implements IUserService {
 
 	@Override
 	public Collection<User> getAllUsers() {
-		List<User> users;
 		try (Connection conn = sql2o.open()) {
-			users = conn.createQuery("SELECT id, name, email FROM users").executeAndFetch(User.class);
+			return conn.createQuery("SELECT id, name, email FROM users").executeAndFetch(User.class);
 		}
-		return users;
 	}
 
 	@Override
@@ -40,12 +43,6 @@ public class Sql2oUserService implements IUserService {
 		try (Connection conn = sql2o.open()) {
 			return getUser(conn, id);
 		}
-	}
-	
-	private static User getUser(Connection conn, int id) {
-		return conn.createQuery("SELECT id, name, email FROM users WHERE id=:id")
-				.addParameter("id", id)
-				.executeAndFetchFirst(User.class);
 	}
 
 	@Override
@@ -56,12 +53,13 @@ public class Sql2oUserService implements IUserService {
 					.addParameter("email", email)
 					.executeUpdate()
 					.getKey(Integer.class);
+			// TODO Process id
 			return getUser(conn, id.intValue());
 		}
 	}
 
 	@Override
-	public User updateUser(int id, String name, String email) throws UserNotFoundException {
+	public void updateUser(int id, String name, String email) throws UserNotFoundException {
 		try (Connection conn = sql2o.open()) {
 			int result = conn.createQuery("UPDATE users SET name=:name, email=:email WHERE id=:id")
 					.addParameter("id", id)
@@ -70,20 +68,19 @@ public class Sql2oUserService implements IUserService {
 					.executeUpdate()
 					.getResult();
 			System.out.println("updateUser result: " + result);
-			return getUser(conn, id);
+			// TODO Process result
 		}
 	}
 
 	@Override
-	public User deleteUser(int id) throws UserNotFoundException {
+	public void deleteUser(int id) throws UserNotFoundException {
 		try (Connection conn = sql2o.open()) {
-			User user = getUser(conn, id);
 			int result = conn.createQuery("DELETE FROM users WHERE id=:id")
 				.addParameter("id", id)
 				.executeUpdate()
 				.getResult();
 			System.out.println("deleteUser result: " + result);
-			return user;
+			// TODO Process result
 		}
 	}
 }

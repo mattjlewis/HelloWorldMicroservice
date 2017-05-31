@@ -3,13 +3,14 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.HelloWorldMicroservice</groupId>
-		<artifactId>HelloWorldMicroservice</artifactId>
+		<groupId>test.hwms</groupId>
+		<artifactId>hwms-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	
+	<artifactId>hwms-rest-service</artifactId>
 	<name>HelloWorldMicroservice - REST Service</name>
-	<artifactId>HelloWorldMicroserviceService</artifactId>
+	<description>HelloWorldMicroservice - REST Service</description>
 	<packaging>jar</packaging>
 	
 	<properties>
@@ -39,8 +40,8 @@
 			<version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.HelloWorldMicroservice</groupId>
-			<artifactId>HelloWorldMicroserviceCommon</artifactId>
+			<groupId>test.hwms</groupId>
+			<artifactId>hwms-common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

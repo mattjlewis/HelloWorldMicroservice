@@ -4,9 +4,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import test.hwms.model.IUserService;
-import test.hwms.model.User;
-import test.hwms.model.UserNotFoundException;
+import test.hwms.domain.IUserService;
+import test.hwms.domain.User;
+import test.hwms.domain.UserNotFoundException;
 
 public class StaticUserService implements IUserService {
 	private static Map<Integer, User> users;
@@ -46,7 +46,7 @@ public class StaticUserService implements IUserService {
 	}
 
 	@Override
-	public User updateUser(int id, String name, String email) throws UserNotFoundException {
+	public void updateUser(int id, String name, String email) throws UserNotFoundException {
 		synchronized (users) {
 			User user = users.get(Integer.valueOf(id));
 			if (user == null) {
@@ -54,19 +54,16 @@ public class StaticUserService implements IUserService {
 			}
 			user.setName(name);
 			user.setEmail(email);
-			return user;
 		}
 	}
 	
 	@Override
-	public User deleteUser(int id) throws UserNotFoundException {
+	public void deleteUser(int id) throws UserNotFoundException {
 		synchronized (users) {
 			User user = users.remove(Integer.valueOf(id));
 			if (user == null) {
 				throw new UserNotFoundException(id);
 			}
-			
-			return user;
 		}
 	}
 }

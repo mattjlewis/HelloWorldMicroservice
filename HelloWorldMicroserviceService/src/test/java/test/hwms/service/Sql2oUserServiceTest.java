@@ -4,13 +4,13 @@ import java.util.Collection;
 
 import org.junit.*;
 
-import test.hwms.model.User;
-import test.hwms.model.UserNotFoundException;
+import test.hwms.domain.User;
+import test.hwms.domain.UserNotFoundException;
 
 @SuppressWarnings("static-method")
 public class Sql2oUserServiceTest {
 	private static Sql2oUserService userService;
-	
+	/*
 	@BeforeClass
 	public static void beforeClass() {
 		userService = new Sql2oUserService("192.168.99.100", 3306, "hwms_owner", "helloworld");
@@ -51,12 +51,27 @@ public class Sql2oUserServiceTest {
 		
 		String updated_name = "Test2";
 		String updated_email = "test2@hwms.test";
-		User updated_user = userService.updateUser(created_user.getId(), updated_name, updated_email);
-		Assert.assertEquals("updated user id", created_user.getId(), updated_user.getId());
-		Assert.assertEquals("updated name", updated_name, updated_user.getName());
-		Assert.assertEquals("updated email", updated_email, updated_user.getEmail());
+		userService.updateUser(created_user.getId(), updated_name, updated_email);
 		
-		User deleted_user = userService.deleteUser(created_user.getId());
-		Assert.assertEquals("deleted user", updated_user, deleted_user);
+		userService.deleteUser(created_user.getId());
 	}
+	
+	@Test
+	public void getUserNotFound() {
+		try {
+			User user = userService.getUser(999);
+			Assert.fail("User was found: " + user);
+		} catch (UserNotFoundException e) {
+		}
+	}
+	
+	@Test
+	public void deleteUserNotFound() {
+		try {
+			userService.deleteUser(999);
+			Assert.fail("Delete user should have failed");
+		} catch (UserNotFoundException e) {
+		}
+	}
+	*/
 }

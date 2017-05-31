@@ -2,11 +2,13 @@ package test.hwms.service;
 
 import static spark.Spark.*;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.google.gson.Gson;
 
-import test.hwms.model.IUserService;
-import test.hwms.model.User;
-import test.hwms.model.UserNotFoundException;
+import test.hwms.domain.IUserService;
+import test.hwms.domain.User;
+import test.hwms.domain.UserNotFoundException;
 
 public class UserServiceController {
 	private static final String JSON_CONTENT_TYPE = "application/json";
@@ -23,19 +25,22 @@ public class UserServiceController {
 			return userService.createUser(user.getName(), user.getEmail());	
 		}, GSON::toJson);
 		// Update
-		put("/service/user", (req, res) -> {
+		put("/service/user/:id", (req, res) -> {
+			System.out.println("put(" + req.params() + ", " + req.queryParams() + ", " + req.body() + ")");
 			User user = GSON.fromJson(req.body(), User.class);
-			return userService.updateUser(user.getId(), user.getName(), user.getEmail());
-		}, GSON::toJson);
+			userService.updateUser(Integer.parseInt(req.params("id")), user.getName(), user.getEmail());
+			res.status(HttpServletResponse.SC_NO_CONTENT);
+			return "";
+		});
 		// Delete
-		delete("/service/user/:id", (req, res) -> userService.deleteUser(Integer.parseInt(req.params("id"))), GSON::toJson);
+		delete("/service/user/:id", (req, res) -> { userService.deleteUser(Integer.parseInt(req.params("id"))); return ""; });
 		
 		after("/service/*", (req, res) -> res.type(JSON_CONTENT_TYPE));
 		
 		exception(UserNotFoundException.class, (exception, req, res) -> {
 			res.type(JSON_CONTENT_TYPE);
-			res.status(400);
-			res.body(GSON.toJson(exception.getMessage()));
+			res.status(HttpServletResponse.SC_NOT_FOUND);
+			res.body(GSON.toJson(new ResponseError(req.pathInfo(), exception)));
 		});
 	}
 }
