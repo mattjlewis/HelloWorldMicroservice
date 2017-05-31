@@ -10,8 +10,8 @@ public class Main {
 	public static final String REST_PORT_PROP = "HWMS_REST_PORT";
 	
 	public static void main(String[] args) {
-		//start(new Sql2oUserService());
-		start(new StaticUserService());
+		start(new Sql2oUserService());
+		//start(new StaticUserService());
 	}
 	
 	public static void start(IUserService userService) {
