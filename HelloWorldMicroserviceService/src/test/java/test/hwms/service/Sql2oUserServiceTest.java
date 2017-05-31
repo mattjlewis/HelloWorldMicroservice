@@ -10,7 +10,7 @@ import test.hwms.domain.UserNotFoundException;
 @SuppressWarnings("static-method")
 public class Sql2oUserServiceTest {
 	private static Sql2oUserService userService;
-	/*
+
 	@BeforeClass
 	public static void beforeClass() {
 		userService = new Sql2oUserService("192.168.99.100", 3306, "hwms_owner", "helloworld");
@@ -56,22 +56,21 @@ public class Sql2oUserServiceTest {
 		userService.deleteUser(created_user.getId());
 	}
 	
-	@Test
+	@Test(expected=UserNotFoundException.class)
 	public void getUserNotFound() {
-		try {
-			User user = userService.getUser(999);
-			Assert.fail("User was found: " + user);
-		} catch (UserNotFoundException e) {
-		}
+		User user = userService.getUser(999);
+		Assert.fail("User was found: " + user);
 	}
 	
-	@Test
-	public void deleteUserNotFound() {
-		try {
-			userService.deleteUser(999);
-			Assert.fail("Delete user should have failed");
-		} catch (UserNotFoundException e) {
-		}
+	@Test(expected=UserNotFoundException.class)
+	public void updateUserNotFound() {
+		userService.updateUser(999, "name", "email");
+		Assert.fail("Update user should have failed");
 	}
-	*/
+	
+	@Test(expected=UserNotFoundException.class)
+	public void deleteUserNotFound() {
+		userService.deleteUser(999);
+		Assert.fail("Delete user should have failed");
+	}
 }

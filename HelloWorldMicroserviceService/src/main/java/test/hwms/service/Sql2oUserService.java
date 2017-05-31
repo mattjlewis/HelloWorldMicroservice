@@ -16,9 +16,13 @@ public class Sql2oUserService implements IUserService {
 	public static final String DEFAULT_DB_PASSWORD = "helloworld";
 	
 	private static User getUser(Connection conn, int id) {
-		return conn.createQuery("SELECT id, name, email FROM users WHERE id=:id")
+		User user = conn.createQuery("SELECT id, name, email FROM users WHERE id=:id")
 				.addParameter("id", id)
 				.executeAndFetchFirst(User.class);
+		if (user == null) {
+			throw new UserNotFoundException(id);
+		}
+		return user;
 	}
 	
 	private Sql2o sql2o;
@@ -53,7 +57,7 @@ public class Sql2oUserService implements IUserService {
 					.addParameter("email", email)
 					.executeUpdate()
 					.getKey(Integer.class);
-			// TODO Process id
+
 			return getUser(conn, id.intValue());
 		}
 	}
@@ -67,8 +71,9 @@ public class Sql2oUserService implements IUserService {
 					.addParameter("email", email)
 					.executeUpdate()
 					.getResult();
-			System.out.println("updateUser result: " + result);
-			// TODO Process result
+			if (result == 0) {
+				throw new UserNotFoundException(id);
+			}
 		}
 	}
 
@@ -79,8 +84,9 @@ public class Sql2oUserService implements IUserService {
 				.addParameter("id", id)
 				.executeUpdate()
 				.getResult();
-			System.out.println("deleteUser result: " + result);
-			// TODO Process result
+			if (result == 0) {
+				throw new UserNotFoundException(id);
+			}
 		}
 	}
 }
