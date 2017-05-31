@@ -17,7 +17,7 @@ public class HomeController {
 	}
 	
 	@GetMapping("/about")
-	String hello(Map<String, Object> model) throws UnknownHostException {
+	String about(Map<String, Object> model) throws UnknownHostException {
 		model.put("page", "about");
 		model.put("os_name", System.getProperty("os.name"));
 		model.put("hostname", InetAddress.getLocalHost().getHostName());

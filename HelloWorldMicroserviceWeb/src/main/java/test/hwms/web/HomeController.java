@@ -17,10 +17,10 @@ public class HomeController {
 		});
 		get("/about", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
-			model.put("page", "hello");
+			model.put("page", "about");
 			model.put("os_name", System.getProperty("os.name"));
 			model.put("hostname", InetAddress.getLocalHost().getHostName());
-			return Main.TEMPLATE_ENGINE.render(new ModelAndView(model, "hello.ftl"));	
+			return Main.TEMPLATE_ENGINE.render(new ModelAndView(model, "about.ftl"));	
 		});
 	}
 }
