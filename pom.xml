@@ -3,8 +3,8 @@
 	
 	<modelVersion>4.0.0</modelVersion>
 	
-	<groupId>com.HelloWorldMicroservice</groupId>
-	<artifactId>HelloWorldMicroservice</artifactId>
+	<groupId>test.hwms</groupId>
+	<artifactId>hwms-parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>HelloWorldMicroservice</name>
 	<description>An example microservice project built on Spark Framework.</description>

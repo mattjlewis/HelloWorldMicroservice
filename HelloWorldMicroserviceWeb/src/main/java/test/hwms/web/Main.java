@@ -8,7 +8,7 @@ import java.util.Map;
 import spark.ModelAndView;
 import spark.TemplateEngine;
 import spark.template.freemarker.FreeMarkerEngine;
-import test.hwms.model.IUserService;
+import test.hwms.domain.IUserService;
 import test.hwms.util.PropertyUtil;
 
 public class Main {

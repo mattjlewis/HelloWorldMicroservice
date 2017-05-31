@@ -25,5 +25,7 @@ ENV MAVEN_VERSION=3.5.0
 # Install maven
 RUN wget http://mirror.vorboss.net/apache/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz && tar zxf apache-maven-${MAVEN_VERSION}-bin.tar.gz
 
+ENV MVN_HOME=/app/apache-maven-${MAVEN_VERSION}
+
 # Compile and package all projects
-RUN MVN_HOME=/app/apache-maven-${MAVEN_VERSION} /app/apache-maven-${MAVEN_VERSION}/bin/mvn package -DskipTests
+RUN ${MVN_HOME}/bin/mvn clean compile package install -DskipTests

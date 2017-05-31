@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.http.HttpHost;
 import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
@@ -15,9 +17,9 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
-import test.hwms.model.IUserService;
-import test.hwms.model.User;
-import test.hwms.model.UserNotFoundException;
+import test.hwms.domain.IUserService;
+import test.hwms.domain.User;
+import test.hwms.domain.UserNotFoundException;
 
 public class RESTClientUserService implements IUserService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(RESTClientUserService.class);
@@ -56,7 +58,9 @@ public class RESTClientUserService implements IUserService {
 				CloseableHttpResponse response = client.execute(httpHost, get)) {
 			int status = response.getStatusLine().getStatusCode();
 			LOGGER.debug("Get user response status: {}", Integer.valueOf(status));
-			// TODO Handle error status codes
+			if (status == HttpServletResponse.SC_NOT_FOUND) {
+				throw new UserNotFoundException(id);
+			}
 			
 			return GSON.fromJson(EntityUtils.toString(response.getEntity()), User.class);
 		} catch (IOException e) {
@@ -89,11 +93,11 @@ public class RESTClientUserService implements IUserService {
 	}
 
 	@Override
-	public User updateUser(int id, String name, String email) throws UserNotFoundException {
-		HttpPut put = new HttpPut("/service/user");
+	public void updateUser(int id, String name, String email) throws UserNotFoundException {
+		HttpPut put = new HttpPut("/service/user/" + id);
 		StringEntity input;
 		try {
-			input = new StringEntity(GSON.toJson(new User(id, name, email)));
+			input = new StringEntity(GSON.toJson(new User(name, email)));
 			input.setContentType("application/json");
 			put.setEntity(input);
 			
@@ -101,29 +105,27 @@ public class RESTClientUserService implements IUserService {
 					CloseableHttpResponse response = client.execute(httpHost, put)) {
 				int status = response.getStatusLine().getStatusCode();
 				LOGGER.debug("Update users response status: {}", Integer.valueOf(status));
-				// TODO Handle error status codes
-				
-				return GSON.fromJson(EntityUtils.toString(response.getEntity()), User.class);
+				if (status == HttpServletResponse.SC_NOT_FOUND) {
+					throw new UserNotFoundException(id);
+				}
 			}
 		} catch (IOException e) {
 			LOGGER.error("Error invoking get User REST service: " + e, e);
 		}
-		return null;
 	}
 
 	@Override
-	public User deleteUser(int id) throws UserNotFoundException {
+	public void deleteUser(int id) throws UserNotFoundException {
 		HttpDelete delete = new HttpDelete("/service/user/" + id);
 		try (CloseableHttpClient client = HttpClients.createDefault();
 				CloseableHttpResponse response = client.execute(httpHost, delete)) {
 			int status = response.getStatusLine().getStatusCode();
 			LOGGER.debug("Delete user response status: {}", Integer.valueOf(status));
-			// TODO Handle error status codes
-			
-			return GSON.fromJson(EntityUtils.toString(response.getEntity()), User.class);
+			if (status == HttpServletResponse.SC_NOT_FOUND) {
+				throw new UserNotFoundException(id);
+			}
 		} catch (IOException e) {
 			LOGGER.error("Error invoking get User REST service: " + e, e);
 		}
-		return null;
 	}
 }
