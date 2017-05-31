@@ -43,7 +43,7 @@ docker run --detach --network=hwms_nw --hostname hwmsdb --name hwmsdb --publish 
 
 Start the NGINX load balancer:
 ```
-docker run --detach --network=hwms_nw --hostname hwmslb1 --name hwmslb1 --publish 8080:80 --volume /home/docker/HelloWorldMicroservice/nginx.conf.d:/etc/nginx/conf.d:ro nginx
+docker run --detach --network=hwms_nw --hostname hwmslb --name hwmslb --publish 8080:80 --volume /home/docker/HelloWorldMicroservice/nginx.conf.d:/etc/nginx/conf.d:ro nginx
 ```
 
 Start the REST services tier:
