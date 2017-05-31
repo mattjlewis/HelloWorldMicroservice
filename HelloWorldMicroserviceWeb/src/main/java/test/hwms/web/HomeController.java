@@ -15,7 +15,7 @@ public class HomeController {
 			model.put("page", "home");
 			return Main.TEMPLATE_ENGINE.render(new ModelAndView(model, "home.ftl"));
 		});
-		get("/hello", (req, res) -> {
+		get("/about", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
 			model.put("page", "hello");
 			model.put("os_name", System.getProperty("os.name"));
