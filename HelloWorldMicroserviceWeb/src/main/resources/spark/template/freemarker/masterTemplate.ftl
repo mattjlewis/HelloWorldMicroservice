@@ -23,7 +23,7 @@
 		<nav id="nav">
 			<ul class="links">
 				<li<#if page??><#if page == "home"> class="active"</#if></#if>><a href="/">Home</a></li>
-				<li<#if page??><#if page == "hello"> class="active"</#if></#if>><a href="/hello">Hello</a></li>
+				<li<#if page??><#if page == "about"> class="active"</#if></#if>><a href="/about">About</a></li>
 				<li<#if page??><#if page == "users"> class="active"</#if></#if>><a href="/users">Users</a></li>
 			</ul>
 		</nav>

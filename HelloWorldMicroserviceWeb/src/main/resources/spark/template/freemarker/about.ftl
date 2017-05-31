@@ -1,6 +1,6 @@
 <#import "masterTemplate.ftl" as layout />
 
-<@layout.masterTemplate title="Hello">
+<@layout.masterTemplate title="About">
 	<ul>
 		<li><strong>O/S</strong>: ${os_name}</li>
 		<li><strong>Hostname</strong>: ${hostname}</li>
