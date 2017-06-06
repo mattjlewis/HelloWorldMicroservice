@@ -34,6 +34,7 @@ docker build -t hwms_db docker-images/hwms_db
 docker build -t hwms .
 docker build -t hwms_rest docker-images/hwms_rest
 docker build -t hwms_web docker-images/hwms_web
+docker build -t hwms_sbweb docker-images/hwms_sbweb
 ```
 
 Start the database:
@@ -52,10 +53,16 @@ docker run --detach --network=hwms_nw --hostname hwmsrest1 --name hwmsrest1 hwms
 docker run --detach --network=hwms_nw --hostname hwmsrest2 --name hwmsrest2 hwms_rest
 ```
 
-Start the web tier:
+Start the Spark Framework web tier:
 ```
 docker run --detach --network=hwms_nw --hostname hwmsweb1 --name hwmsweb1 hwms_web
 docker run --detach --network=hwms_nw --hostname hwmsweb2 --name hwmsweb2 hwms_web
+```
+
+Start the Spring Boot web tier:
+```
+docker run --detach --network=hwms_nw --hostname hwmssbweb1 --name hwmssbweb1 hwms_sbweb
+docker run --detach --network=hwms_nw --hostname hwmssbweb2 --name hwmssbweb2 hwms_sbweb
 ```
 
 Test:
