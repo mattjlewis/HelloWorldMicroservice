@@ -29,12 +29,9 @@ public class UserController {
 	
 	// Get
 	@GetMapping("/user/{id}")
-	String getUser(@PathVariable("id") Integer id, Map<String, Object> model) throws UserNotFoundException {
+	String getUser(@PathVariable("id") int id, Map<String, Object> model) throws UserNotFoundException {
 		model.put("page", "users");
-		if (id == null) {
-			return "redirect:/users";
-		}
-		model.put("user", userService.getUser(id.intValue()));
+		model.put("user", userService.getUser(id));
 		return "user";
 	}
 	
@@ -68,15 +65,4 @@ public class UserController {
 		mav.addObject("message", e.getMessage());
 		return mav;
 	}
-
-	/*
-	@SuppressWarnings("static-method")
-	@ExceptionHandler(UserNotFoundException.class)
-	String userNotFound(UserNotFoundException e, Map<String, Object> model) {
-		System.out.println("userNotFound!");
-		model.put("status", Integer.valueOf(404));
-		model.put("message", e.getMessage());
-		return "error";
-	}
-	*/
 }
