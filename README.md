@@ -6,7 +6,7 @@ As docker-engine is only supported on Windows 10 and I am running Windows 7 I ne
 I could create my own Linux Virtual Machine and install docker-engine on that, however, docker-machine makes this much easier.
 Make sure you have [VirtualBox](https://www.virtualbox.org/wiki/Downloads) installed.
 
-Docker Machine creates a light-weight Virtual Machine based on [boot2docker](http://boot2docker.io/) for hosting containers.
+Docker Machine creates a lightweight Virtual Machine based on [boot2docker](http://boot2docker.io/) for hosting containers.
 If on Windows or Mac install [docker-toolbox](https://www.docker.com/products/docker-toolbox) (I selected Docker Client and Docker Machine).
 
 Create a new docker host machine and log in to it:
