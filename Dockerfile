@@ -1,4 +1,5 @@
 FROM isuper/java-oracle:jdk_latest
+LABEL maintainer "Matthew Lewis"
 
 # Install wget (for Maven install)
 RUN apt-get update && apt-get install -y wget

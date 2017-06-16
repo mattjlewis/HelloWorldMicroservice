@@ -1,4 +1,5 @@
 FROM mysql
+LABEL maintainer "Matthew Lewis"
 
 ENV MYSQL_DATABASE=hwms \
 	MYSQL_ROOT_PASSWORD=helloworld

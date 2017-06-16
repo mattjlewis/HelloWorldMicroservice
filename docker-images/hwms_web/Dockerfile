@@ -1,4 +1,5 @@
 FROM hwms
+LABEL maintainer "Matthew Lewis"
 
 EXPOSE 8020
 
