@@ -51,6 +51,7 @@ public class UserController {
 		System.out.println("Update user " + id + ", " + user);
 		model.put("page", "users");
 		userService.updateUser(id.intValue(), user.getName(), user.getEmail());
+		// FIXME Seems to redirect to port 80 rather than 8080!
 		return "redirect:/users";
 	}
 	

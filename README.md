@@ -15,7 +15,7 @@ docker-machine create --virtualbox-memory "4096"
 docker-machine ssh
 ```
 
-Download the projects:
+Download the projects: (note may need to set proxy ```export http_proxy=www-proxy-lon.uk.oracle.com:80; export https_proxy=www-proxy-lon.uk.oracle.com:80```
 ```
 git clone https://github.com/mattjlewis/HelloWorldMicroservice
 cd HelloWorldMicroservice
@@ -42,11 +42,6 @@ Start the database:
 docker run --detach --network=hwms_nw --hostname hwmsdb --name hwmsdb --publish 3306:3306 --volume /home/docker/datadir:/var/lib/mysql hwms_db
 ```
 
-Start the NGINX load balancer:
-```
-docker run --detach --network=hwms_nw --hostname hwmslb --name hwmslb --publish 8080:80 --volume /home/docker/HelloWorldMicroservice/nginx.conf.d:/etc/nginx/conf.d:ro nginx
-```
-
 Start the REST services tier:
 ```
 docker run --detach --network=hwms_nw --hostname hwmsrest1 --name hwmsrest1 hwms_rest
@@ -65,6 +60,11 @@ docker run --detach --network=hwms_nw --hostname hwmssbweb1 --name hwmssbweb1 hw
 docker run --detach --network=hwms_nw --hostname hwmssbweb2 --name hwmssbweb2 hwms_sbweb
 ```
 
+Start the NGINX load balancer:
+```
+docker run --detach --network=hwms_nw --hostname hwmslb --name hwmslb --publish 8080:80 --volume /home/docker/HelloWorldMicroservice/nginx.conf.d:/etc/nginx/conf.d:ro nginx
+```
+
 Test:
 ```
 curl http://localhost:8080/service/users
@@ -76,4 +76,5 @@ Access the [Browser UI](http://localhost:8080/) via NGINX.
 
 1. Deploy to docker swarm and use ```docker service scale```
 1. Use docker-compose
+1. Use Kubernetes?
 1. Use ```store/oracle/serverjre:8``` rather than the unsupported ```isuper/java-oracle```
